@@ -1,0 +1,21 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html style="height:100%">
+@Html.Partial("/Views/MainLayout/PartialHead.cshtml")
+
+<body style="height:100%">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    <div class="container app">
+        <div class="row app-one">
+            @RenderBody()
+        </div>
+    </div>
+
+    
+</body>
+</html>

@@ -1,0 +1,22 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+@Html.Partial("/Views/MainLayout/PartialHead.cshtml")
+<body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <div class="container app">
+        <div class="row app-one">
+            @Html.Partial("/Views/MainLayout/PartialLeft.cshtml")
+
+            @Html.Partial("/Views/MainLayout/PartialRight.cshtml")
+        </div>
+    </div>
+
+    @RenderBody()
+</body>
+</html>

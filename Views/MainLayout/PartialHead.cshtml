@@ -1,0 +1,22 @@
+﻿<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>_MainLayout</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Template/web/Main.css">
+    <script>
+        $(function () {
+            $(".heading-compose").click(function () {
+                $(".side-two").css({
+                    "left": "0"
+                });
+            });
+
+            $(".newMessage-back").click(function () {
+                $(".side-two").css({
+                    "left": "-100%"
+                });
+            });
+        })
+    </script>
+</head>

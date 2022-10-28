@@ -1,0 +1,231 @@
+﻿@model ChatAppMVC.Models.tblUser
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+
+<div class="col-sm-4 side">
+    <div class="side-one">
+        <div class="row heading">
+            <div class="col-sm-2 col-xs-3 heading-avatar">
+                <div class="heading-avatar-icon">
+                    <img src="@Model.UserImageURL">
+                </div>
+            </div>
+            <div class="col-sm-6 col-xs-7 heading-name">
+                <h4 style="padding-left: 8px">
+                    Arkadaşlarım
+                </h4>
+
+            </div>
+            <div class="col-sm-1 col-xs-1  heading-dot  pull-right">
+                <i class="fa fa-ellipsis-v fa-2x  pull-right" aria-hidden="true"></i>
+            </div>
+            <div class="col-sm-2 col-xs-2 heading-compose  pull-right">
+                <a href="/Main/Index/"><i class="fa fa-comments fa-2x  pull-right" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="row searchBox">
+            <div class="col-sm-12 searchBox-inner">
+                <div class="form-group has-feedback">
+                    <input id="searchText" type="text" class="form-control" name="searchText" placeholder="Search">
+                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row sideBar">
+            @foreach (ChatAppMVC.Models.tblFriend item in ViewBag.Friends)
+            {
+
+                if (item.FriendSender == Model.UserID)
+                {
+
+                    <div class="row sideBar-body">
+                        <div class="col-sm-3 col-xs-3 sideBar-avatar">
+                            <div class="avatar-icon">
+                                <img src="@item.tblUser1.UserImageURL">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-9 col-xs-9 sideBar-main">
+                            <div class="row">
+                                <div class="col-sm-6 col-xs-8 sideBar-name">
+                                    <p style="padding-top: 5%">
+                                        <a href="/Main/MessageBox/@item.tblUser1.UserID" style=" color:black"> @item.tblUser1.UserNick </a>
+                                    </p>
+                                </div>
+                                @*<div class="col-sm-2 col-xs-4 pull-left sideBar-time">
+                                    <p style="padding:2px ; border-radius: 50%; background-color:red ; text-align: center">
+                                        1
+                                    </p>
+                                </div>*@
+                                <div class="col-sm-3 col-xs-4 pull-right sideBar-time">
+                                    <span class="time-meta pull-right">
+                                        18:18
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+                else
+                {
+                    <div class="row sideBar-body">
+                        <div class="col-sm-3 col-xs-3 sideBar-avatar">
+                            <div class="avatar-icon">
+                                <img src="@item.tblUser.UserImageURL">
+                            </div>
+                        </div>
+                        <div class="col-sm-9 col-xs-9 sideBar-main">
+                            <div class="row">
+                                <div class="col-sm-6 col-xs-8 sideBar-name">
+                                    <p style="padding-top: 5%">
+                                        <a href="/Main/MessageBox/@item.tblUser.UserID" style=" color:black"> @item.tblUser.UserNick </a>
+                                    </p>
+                                </div>
+                                @*<div class="col-sm-2 col-xs-4 pull-left sideBar-time">
+                                    <p style="padding:2px ; border-radius: 50%; background-color:red ; text-align: center">
+                                        1
+                                    </p>
+                                </div>*@
+                                <div class="col-sm-3 col-xs-4 pull-right sideBar-time">
+                                    <span class="time-meta pull-right">
+                                        18:18
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+
+        </div>
+    </div>
+    
+    <div class="row reply">
+        <div class="col-sm-1 col-xs-1 reply-emojis">
+            <i class="fa fa-smile-o fa-2x"></i>
+        </div>
+        <div class="col-sm-9 col-xs-9 reply-main">
+            <textarea class="form-control" rows="1" id="comment"></textarea>
+        </div>
+        <div class="col-sm-1 col-xs-1 reply-recording">
+            <i class="fa fa-microphone fa-2x" aria-hidden="true"></i>
+        </div>
+        <div class="col-sm-1 col-xs-1 reply-send">
+            <i class="fa fa-send fa-2x" aria-hidden="true"></i>
+        </div>
+    </div>
+
+</div>
+<div class="col-sm-8 conversation">
+
+    <div class="row heading">
+        <div class="col-sm-2 col-md-1 col-xs-3 heading-avatar">
+            <div class="heading-avatar-icon">
+                <img src="https://bootdey.com/img/Content/avatar/avatar6.png">
+            </div>
+        </div>
+        <div class="col-sm-8 col-xs-7 heading-name">
+            <h4 style="padding-left: 8px">
+                @Model.UserNick
+            </h4>
+            <span class="heading-online">Online</span>
+        </div>
+        <div class="col-sm-1 col-xs-1  heading-dot pull-right">
+            <i class="fa fa-ellipsis-v fa-2x  pull-right" aria-hidden="true"></i>
+        </div>
+    </div>
+    @{
+        var routeValues = Model;
+        using (Html.BeginForm("UpdateProfil", "Profil", routeValues))
+        {
+            <h3 style="text-align:center; padding: 20px 0px ; ">Profil</h3>
+            <input hidden name="UserID" value="@Model.UserID" />
+            <table style="width:96%; margin:2%" class="table table-bordered">
+                <tr>
+                    <td>Kod :</td>
+                    <td>@Model.UserCode</td>
+                </tr>
+                <tr>
+                    <td>İsim :</td>
+                    <td>@Model.UserName</td>
+                </tr>
+                <tr>
+                    <td>Soyisim :</td>
+                    <td>@Model.UserSurname</td>
+                </tr>
+                <tr>
+                    <td>E-Mail :</td>
+                    <td>
+                        <input class="form-control" type="text" name="UserMail" value="@Model.UserMail" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nick :</td>
+                    <td>
+                        <input class="form-control" type="text" name="UserNick" value="@Model.UserNick" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 25%">Profil Fotoğrafı :</td>
+                    <td>
+                        <input class="form-control" type="text" name="UserImageURL" value="@Model.UserImageURL" />
+                    </td>
+                </tr>
+
+            </table>
+
+            <div class="clearfix" style="padding-right:20px">
+                <button onclick="btnUpdateProfil()" type="submit" class="pull-right" style="border-radius: 20px; padding: 4px 12px; width: 80px; background-color: #009688; color: white; border-color: #009688">Güncelle</button>
+            </div>
+        }
+    }
+
+    @{
+        var routeValues1 = Model;
+        using (Html.BeginForm("SendFriend", "Profil", routeValues1))
+        {
+            <h3 style="text-align:center; padding: 0px 0px 20px 0px ; ">Arkadaş Ekle</h3>
+            <input hidden name="UserID" value="@Model.UserID" />
+            <table style="width:96%; margin:2%" class="table table-bordered">
+
+                <tr>
+                    <td>Arkadaş Kodu :</td>
+                    <td>
+                        <input class="form-control" type="text" name="UserCode" placeholder="Arkadaş Kodu" />
+                    </td>
+                    <td>
+                        <div class="clearfix" style="padding-right:20px">
+                            <button onclick="btnSendFriend()" type="submit" class="pull-right" style="border-radius: 20px; padding: 4px 12px; width: 80px; background-color: #009688; color: white; border-color: #009688">Ekle</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        }
+    }
+    @if (true)
+    {
+        <div class="clearfix" style="padding-right:20px">
+            <a href="/Profil/friendRequest/@Model.UserID"  class="pull-right" style="border-radius: 20px; padding: 4px 12px; background-color: #009688; color: white; text-align:center; text-decoration:none">Arkadaşlık İstekleri</a>
+        </div>
+    }
+    
+
+
+    <script>
+
+        function btnUpdateProfil() {
+            alert('Profil Güncellendi');
+        }
+        function btnSendFriend() {
+            alert('Arkadaşlık isteği gönderildi...');
+        }
+    </script>
+
+
+</div>

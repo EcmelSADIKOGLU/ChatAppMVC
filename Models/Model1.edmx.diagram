@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a0645887955040be8e7b3479dd405e5b" Name="Diagram1">
+        <EntityTypeShape EntityType="dbChatBoxModel.tblMessage" Width="1.5" PointX="5.25" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbChatBoxModel.tblUser" Width="1.5" PointX="2.875" PointY="2.25" IsExpanded="true" />
+        <AssociationConnector Association="dbChatBoxModel.FK_tblMessage_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="dbChatBoxModel.FK_tblMessage_tblUser1" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="dbChatBoxModel.tblFriend" Width="1.5" PointX="0.5" PointY="3.125" />
+        <AssociationConnector Association="dbChatBoxModel.FK_tblFriend_tblUser" />
+        <AssociationConnector Association="dbChatBoxModel.FK_tblFriend_tblUser1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

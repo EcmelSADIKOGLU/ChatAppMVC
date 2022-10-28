@@ -1,0 +1,289 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="dbChatBoxModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblFriend">
+          <Key>
+            <PropertyRef Name="FriendID" />
+          </Key>
+          <Property Name="FriendID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FriendSender" Type="int" />
+          <Property Name="FriendReceiver" Type="int" />
+          <Property Name="FriendStatus" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="tblMessage">
+          <Key>
+            <PropertyRef Name="MessageID" />
+          </Key>
+          <Property Name="MessageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MessageSender" Type="int" />
+          <Property Name="MessageReceiver" Type="int" />
+          <Property Name="MessageContent" Type="nvarchar(max)" />
+          <Property Name="MessageDate" Type="smalldatetime" />
+          <Property Name="MessageStatus" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserSurname" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserNick" Type="nvarchar" MaxLength="20" />
+          <Property Name="UserCode" Type="nchar" MaxLength="8" />
+          <Property Name="UserMail" Type="nvarchar" MaxLength="100" />
+          <Property Name="UserPassword" Type="nvarchar" MaxLength="20" />
+          <Property Name="UserImageURL" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_tblFriend_tblUser">
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
+          <End Role="tblFriend" Type="Self.tblFriend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblFriend">
+              <PropertyRef Name="FriendSender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblFriend_tblUser1">
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
+          <End Role="tblFriend" Type="Self.tblFriend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblFriend">
+              <PropertyRef Name="FriendReceiver" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblMessage_tblUser">
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
+          <End Role="tblMessage" Type="Self.tblMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblMessage">
+              <PropertyRef Name="MessageSender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblMessage_tblUser1">
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
+          <End Role="tblMessage" Type="Self.tblMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblMessage">
+              <PropertyRef Name="MessageReceiver" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbChatBoxModelStoreContainer">
+          <EntitySet Name="tblFriend" EntityType="Self.tblFriend" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblMessage" EntityType="Self.tblMessage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUser" EntityType="Self.tblUser" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblFriend_tblUser" Association="Self.FK_tblFriend_tblUser">
+            <End Role="tblUser" EntitySet="tblUser" />
+            <End Role="tblFriend" EntitySet="tblFriend" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblFriend_tblUser1" Association="Self.FK_tblFriend_tblUser1">
+            <End Role="tblUser" EntitySet="tblUser" />
+            <End Role="tblFriend" EntitySet="tblFriend" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblMessage_tblUser" Association="Self.FK_tblMessage_tblUser">
+            <End Role="tblUser" EntitySet="tblUser" />
+            <End Role="tblMessage" EntitySet="tblMessage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblMessage_tblUser1" Association="Self.FK_tblMessage_tblUser1">
+            <End Role="tblUser" EntitySet="tblUser" />
+            <End Role="tblMessage" EntitySet="tblMessage" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbChatBoxModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblMessage">
+          <Key>
+            <PropertyRef Name="MessageID" />
+          </Key>
+          <Property Name="MessageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MessageSender" Type="Int32" />
+          <Property Name="MessageReceiver" Type="Int32" />
+          <Property Name="MessageContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MessageDate" Type="DateTime" Precision="0" />
+          <Property Name="MessageStatus" Type="Boolean" />
+          <NavigationProperty Name="tblUser" Relationship="Self.FK_tblMessage_tblUser" FromRole="tblMessage" ToRole="tblUser" />
+          <NavigationProperty Name="tblUser1" Relationship="Self.FK_tblMessage_tblUser1" FromRole="tblMessage" ToRole="tblUser" />
+        </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserSurname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserNick" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UserCode" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
+          <Property Name="UserMail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UserPassword" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UserImageURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblMessages" Relationship="Self.FK_tblMessage_tblUser" FromRole="tblUser" ToRole="tblMessage" />
+          <NavigationProperty Name="tblMessages1" Relationship="Self.FK_tblMessage_tblUser1" FromRole="tblUser" ToRole="tblMessage" />
+          <NavigationProperty Name="tblFriends" Relationship="dbChatBoxModel.FK_tblFriend_tblUser" FromRole="tblUser" ToRole="tblFriend" />
+          <NavigationProperty Name="tblFriends1" Relationship="dbChatBoxModel.FK_tblFriend_tblUser1" FromRole="tblUser" ToRole="tblFriend" />
+        </EntityType>
+        <Association Name="FK_tblMessage_tblUser">
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
+          <End Role="tblMessage" Type="Self.tblMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblMessage">
+              <PropertyRef Name="MessageSender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblMessage_tblUser1">
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
+          <End Role="tblMessage" Type="Self.tblMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblMessage">
+              <PropertyRef Name="MessageReceiver" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbChatBoxEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblMessages" EntityType="Self.tblMessage" />
+          <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
+          <AssociationSet Name="FK_tblMessage_tblUser" Association="Self.FK_tblMessage_tblUser">
+            <End Role="tblUser" EntitySet="tblUsers" />
+            <End Role="tblMessage" EntitySet="tblMessages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblMessage_tblUser1" Association="Self.FK_tblMessage_tblUser1">
+            <End Role="tblUser" EntitySet="tblUsers" />
+            <End Role="tblMessage" EntitySet="tblMessages" />
+          </AssociationSet>
+          <EntitySet Name="tblFriends" EntityType="dbChatBoxModel.tblFriend" />
+          <AssociationSet Name="FK_tblFriend_tblUser" Association="dbChatBoxModel.FK_tblFriend_tblUser">
+            <End Role="tblUser" EntitySet="tblUsers" />
+            <End Role="tblFriend" EntitySet="tblFriends" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblFriend_tblUser1" Association="dbChatBoxModel.FK_tblFriend_tblUser1">
+            <End Role="tblUser" EntitySet="tblUsers" />
+            <End Role="tblFriend" EntitySet="tblFriends" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="tblFriend">
+          <Key>
+            <PropertyRef Name="FriendID" />
+          </Key>
+          <Property Name="FriendID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FriendSender" Type="Int32" />
+          <Property Name="FriendReceiver" Type="Int32" />
+          <Property Name="FriendStatus" Type="Byte" />
+          <NavigationProperty Name="tblUser" Relationship="dbChatBoxModel.FK_tblFriend_tblUser" FromRole="tblFriend" ToRole="tblUser" />
+          <NavigationProperty Name="tblUser1" Relationship="dbChatBoxModel.FK_tblFriend_tblUser1" FromRole="tblFriend" ToRole="tblUser" />
+        </EntityType>
+        <Association Name="FK_tblFriend_tblUser">
+          <End Type="dbChatBoxModel.tblUser" Role="tblUser" Multiplicity="0..1" />
+          <End Type="dbChatBoxModel.tblFriend" Role="tblFriend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblFriend">
+              <PropertyRef Name="FriendSender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblFriend_tblUser1">
+          <End Type="dbChatBoxModel.tblUser" Role="tblUser" Multiplicity="0..1" />
+          <End Type="dbChatBoxModel.tblFriend" Role="tblFriend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblFriend">
+              <PropertyRef Name="FriendReceiver" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbChatBoxModelStoreContainer" CdmEntityContainer="dbChatBoxEntities">
+          <EntitySetMapping Name="tblMessages">
+            <EntityTypeMapping TypeName="dbChatBoxModel.tblMessage">
+              <MappingFragment StoreEntitySet="tblMessage">
+                <ScalarProperty Name="MessageID" ColumnName="MessageID" />
+                <ScalarProperty Name="MessageSender" ColumnName="MessageSender" />
+                <ScalarProperty Name="MessageReceiver" ColumnName="MessageReceiver" />
+                <ScalarProperty Name="MessageContent" ColumnName="MessageContent" />
+                <ScalarProperty Name="MessageDate" ColumnName="MessageDate" />
+                <ScalarProperty Name="MessageStatus" ColumnName="MessageStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUsers">
+            <EntityTypeMapping TypeName="dbChatBoxModel.tblUser">
+              <MappingFragment StoreEntitySet="tblUser">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserSurname" ColumnName="UserSurname" />
+                <ScalarProperty Name="UserNick" ColumnName="UserNick" />
+                <ScalarProperty Name="UserCode" ColumnName="UserCode" />
+                <ScalarProperty Name="UserMail" ColumnName="UserMail" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+                <ScalarProperty Name="UserImageURL" ColumnName="UserImageURL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFriends">
+            <EntityTypeMapping TypeName="dbChatBoxModel.tblFriend">
+              <MappingFragment StoreEntitySet="tblFriend">
+                <ScalarProperty Name="FriendStatus" ColumnName="FriendStatus" />
+                <ScalarProperty Name="FriendReceiver" ColumnName="FriendReceiver" />
+                <ScalarProperty Name="FriendSender" ColumnName="FriendSender" />
+                <ScalarProperty Name="FriendID" ColumnName="FriendID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

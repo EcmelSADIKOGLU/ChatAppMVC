@@ -1,0 +1,230 @@
+﻿
+@model ChatAppMVC.Models.tblUser
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<div class="col-sm-4 side">
+    <div class="side-one">
+        <div class="row heading">
+            <div class="col-sm-2 col-xs-3 heading-avatar">
+                <div class="heading-avatar-icon">
+                    <img src="@Model.UserImageURL">
+                </div>
+            </div>
+            <div class="col-sm-6 col-xs-7 heading-name">
+                <h5 style="padding-left: 8px">
+                    <a style="color:black ; text-decoration:none" href="/Profil/Index/">@Model.UserNick</a>
+                </h5>
+
+            </div>
+            <div class="col-sm-1 col-xs-1  heading-dot  pull-right">
+                <i class="fa fa-ellipsis-v fa-2x  pull-right" aria-hidden="true"></i>
+            </div>
+            <div class="col-sm-2 col-xs-2 heading-compose  pull-right">
+                <a href="/Main/Index/"><i class="fa fa-comments fa-2x  pull-right" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="row searchBox">
+            <div class="col-sm-12 searchBox-inner">
+                <div class="form-group has-feedback">
+                    <input id="searchText" type="text" class="form-control" name="searchText" placeholder="Search">
+                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row sideBar">
+
+            @foreach (ChatAppMVC.Models.tblFriend item in ViewBag.Friends)
+            {
+
+                if (item.FriendSender == Model.UserID)
+                {
+
+                    <div class="row sideBar-body">
+                        <div class="col-sm-3 col-xs-3 sideBar-avatar">
+                            <div class="avatar-icon">
+                                <img src="@item.tblUser1.UserImageURL">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-9 col-xs-9 sideBar-main">
+                            <div class="row">
+                                <div class="col-sm-6 col-xs-8 sideBar-name">
+                                    <p style="padding-top: 5%">
+                                       <a href="/Main/MessageBox/@item.tblUser1.UserID" style=" color:black"> @item.tblUser1.UserNick </a>
+                                    </p>
+                                </div>
+                                @*<div class="col-sm-2 col-xs-4 pull-left sideBar-time">
+                                        <p style="padding:2px ; border-radius: 50%; background-color:red ; text-align: center">
+                                            1
+                                        </p>
+                                    </div>*@
+                                <div class="col-sm-3 col-xs-4 pull-right sideBar-time">
+                                    <span class="time-meta pull-right">
+                                        18:18
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+                else
+                {
+                    <div class="row sideBar-body">
+                        <div class="col-sm-3 col-xs-3 sideBar-avatar">
+                            <div class="avatar-icon">
+                                <img src="@item.tblUser.UserImageURL">
+                            </div>
+                        </div>
+                        <div class="col-sm-9 col-xs-9 sideBar-main">
+                            <div class="row">
+                                <div class="col-sm-6 col-xs-8 sideBar-name">
+                                    <p style="padding-top: 5%">
+                                        <a href="/Main/MessageBox/@item.tblUser.UserID" style=" color:black"> @item.tblUser.UserNick </a>
+                                    </p>
+                                </div>
+                                @*<div class="col-sm-2 col-xs-4 pull-left sideBar-time">
+                                        <p style="padding:2px ; border-radius: 50%; background-color:red ; text-align: center">
+                                            1
+                                        </p>
+                                    </div>*@
+                                <div class="col-sm-3 col-xs-4 pull-right sideBar-time">
+                                    <span class="time-meta pull-right">
+                                        18:18
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+
+        </div>
+    </div>
+
+    <div class="row reply">
+        <div class="col-sm-1 col-xs-1 reply-emojis">
+            <i class="fa fa-smile-o fa-2x"></i>
+        </div>
+        <div class="col-sm-9 col-xs-9 reply-main">
+            <textarea class="form-control" rows="1" id="comment"></textarea>
+        </div>
+        <div class="col-sm-1 col-xs-1 reply-recording">
+            <i class="fa fa-microphone fa-2x" aria-hidden="true"></i>
+        </div>
+        <div class="col-sm-1 col-xs-1 reply-send">
+            <i class="fa fa-send fa-2x" aria-hidden="true"></i>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="col-sm-8 conversation">
+    <div class="row heading">
+        <div class="col-sm-2 col-md-1 col-xs-3 heading-avatar">
+            <div class="heading-avatar-icon">
+                <img src="https://bootdey.com/img/Content/avatar/avatar6.png">
+            </div>
+        </div>
+        <div class="col-sm-8 col-xs-7 heading-name">
+            <a class="heading-name-meta">
+                @ViewBag.item.UserNick
+            </a>
+            <span class="heading-online">Online</span>
+        </div>
+        <div class="col-sm-1 col-xs-1  heading-dot pull-right">
+            <i class="fa fa-ellipsis-v fa-2x  pull-right" aria-hidden="true"></i>
+        </div>
+    </div>
+
+    <div class="row message" id="conversation">
+        <br />
+        @foreach (var item in ViewBag.messages)
+        {
+            if (item.MessageSender != ViewBag.item.UserID)
+            {
+                
+                <div class="row message-body">
+                    <div class="col-sm-12 message-main-sender">
+                        <div class="sender">
+                            <div class="message-text">
+                                @item.MessageContent
+                            </div>
+                            <span class="message-time pull-right">
+                                @item.MessageDate
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row message-body">
+                    <div class="col-sm-12 message-main-receiver">
+                        <div class="receiver">
+                            <div class="message-text">
+                                @item.MessageContent
+                            </div>
+                            <span class="message-time pull-right">
+                                @item.MessageDate
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        }
+
+    </div>
+
+    <div class="row reply">
+        <div class="col-sm-1 col-xs-1 reply-emojis" style="
+    text-align: center;">
+            <i class="fa fa-smile-o fa-2x"></i>
+        </div>
+        @{
+            using (Html.BeginForm("SendMessage", "Main", FormMethod.Post, new AjaxOptions { UpdateTargetId = "SendMessage" }))
+            {
+
+                <input type="hidden" name="SenderID" value="@Model.UserID" />
+                <input type="hidden" name="ReceiverID" value="@ViewBag.item.UserID" />
+
+                <div class="col-sm-9 col-xs-9 reply-main">
+                    @Html.TextBox("MessageContent", "", new { @class = "form-control" })
+                </div>
+
+                <div class="col-sm-1 col-xs-1 reply-send" style="
+    text-align: center;">
+                    <button style="border:none"><i class="fa fa-send fa-2x" aria-hidden="true"></i></button>
+                </div>
+
+
+
+            }
+        }
+        @*<div class="col-sm-9 col-xs-9 reply-main">
+                <textarea class="form-control" rows="1" id="MessageContent"></textarea>
+            </div>
+            <div class="col-sm-1 col-xs-1 reply-send" style="
+        text-align: center;">
+                <a href="#"<i class="fa fa-send fa-2x" aria-hidden="true"></i></a>
+            </div>*@
+        <div class="col-sm-1 col-xs-1 reply-recording" style="
+    text-align: center;">
+            <i class="fa fa-microphone fa-2x" aria-hidden="true"></i>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
